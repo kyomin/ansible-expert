@@ -1,6 +1,6 @@
 @echo off
 setlocal 
-set /p name=¾î´À vagrant¸¦ Àç ±¸¼º ¹× ½ÃÀÛÇÏ½Ã°Ú½À´Ï±î? ¸ğµÎ´Â ±×³É enter¸¦ ÀÔ·Â ÇÏ¼¼¿ä: || set name=default
+set /p name=ì–´ëŠ vagrantë¥¼ ì¬ êµ¬ì„± ë° ì‹œì‘í•˜ì‹œê² ìŠµë‹ˆê¹Œ? ëª¨ë‘ëŠ” ê·¸ëƒ¥ enterë¥¼ ì…ë ¥ í•˜ì„¸ìš”: || set name=default
 if %name%==default (
 	vagrant halt && vagrant destroy -f && vagrant up
 ) else (

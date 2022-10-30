@@ -1,0 +1,16 @@
+---
+- hosts: nodes    # nodes에 대한 게스트들의 정보를 읽어들여서
+  connection: local    # nodes에서 실행되는 것이 아니라 목적지를 local, 즉 앤서블 서버로 실행하도록 작성
+  serial: 1   # 태스크를 한 개씩 진행. 한꺼번에 수행할 경우 쓰기(write)가 되지 않을 경우가 있기 때문이다.
+  gather_facts: no
+
+  tasks:
+  - command: /usr/bin/ssh-keyscan -t ecdsa {{ ansible_host }}   # ansible_host는 매직 변수로 앤서블 호스트의 정보를 변수로 바로 쓸 수 있도록 미리 지정되어 있는 값이다.
+    register: keyscan   # register 옵션을 사용하여 keyscan 변수에 출력 값을 저장
+
+  - lineinfile:
+      name=~/.ssh/known_hosts
+      create=yes
+      line={{ item }}
+    with_items:
+      - "{{ keyscan.stdout_lines }}"
