@@ -132,5 +132,7 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 			cfg.vm.provision "shell", path: "bash_ssh_conf_4_CentOS.sh"
 			cfg.vm.provision "file", source: "Auto_known_host.yml", destination: "Auto_known_host.yml"
 			cfg.vm.provision "shell", inline: "ansible-playbook Auto_known_host.yml", privileged: false	
+			cfg.vm.provision "file", source: "Auto_authorized_keys.yml", destination: "Auto_authorized_keys.yml"
+			cfg.vm.provision "shell", inline: "ansible-playbook Auto_authorized_keys.yml --extra-vars 'ansible_ssh_pass=vagrant'", privileged: false
   end  
 end

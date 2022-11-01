@@ -1,0 +1,21 @@
+---
+- hosts: nodes  # nodes에 대한 게스트들의 정보를 읽어들여서
+  gather_facts: no
+
+  tasks:
+  - name: ssh-keygen
+    connection: local   # nodes에서 실행되는 것이 아니라 목적지를 local, 즉 앤서블 서버로 실행하도록 작성
+    command: "ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ''"  # ssh-keygen 명령을 통해서 공개 키와 개인 키를 생성
+    ignore_errors: yes  # 에러가 발생하여도 계속 수행되도록 함
+    run_once: true  # 공개 키와 개인 키는 한 번만 만들기 위한 옵션
+
+  - name: read id_rsa.pub
+    connection: local 
+    command: "cat ~/.ssh/id_rsa.pub"
+    register: id_pub  # register 옵션을 사용하여 id_pub 변수에 출력 값을 저장
+    run_once: true
+
+  - name: remote lineinfile for authorized_keys
+    lineinfile:
+      dest: /home/vagrant/.ssh/authorized_keys  # id_pub의 값들을 라인별로 해당 파일에 쓴다.
+      line: "{{ id_pub.stdout }}"
