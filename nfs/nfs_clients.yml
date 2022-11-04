@@ -1,0 +1,13 @@
+- name: make nfs_client directory
+  file:
+    path: "{{ ansible_user_dir }}/nfs"
+    state: directory
+
+- name: mount point direcotry as client
+  become: yes
+  mount:
+    name: "{{ ansible_user_dir }}/nfs"
+    src: "{{ ansible_env.SSH_CLIENT.split()[0] }}:/home/vagrant/nfs_shared"   # ansible_env.SSH_CLIENT.split()[0]는 앤서블 컨트롤 머신의 IP인 192.168.219.10을 가리킴
+    fstype: nfs
+    opts: nfsvers=3
+    state: mounted
