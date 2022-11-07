@@ -1,0 +1,7 @@
+# Create by Template at {{ ansible_date_time.iso8601 }}
+
+127.0.0.1 {{ ansible_hostname }}
+192.168.1.10 ansible-server
+{% for ip in range(nu | int) %}   {# {%...%}: 조건, 반복과 같은 제어가 들어가는 라인 #}
+{{ groups['nodes'][ip] }} node{{ groups['nodes'][ip][-3:] }}    {# {{...}}: 표현식(문)이 들어가는 라인 #}
+{% endfor %}

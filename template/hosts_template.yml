@@ -1,0 +1,13 @@
+---
+- name: Create hosts file by template
+  hosts: nodes
+  become: yes
+  vars:
+    # groups['nodes']는 '/etc/ansible/hosts'에 포함되어 있는 앤서블 호스트 그룹 중에 nodes를 의미
+    # '| count'는 필터로서, 해당 nodes의 개수를 반환해 준다.
+    nu: "{{ groups['nodes'] | count }}"
+
+  tasks:
+  - template:
+      src: hosts.j2   # hosts.j2의 출력 결과를 
+      dest: /etc/hosts  # 해당 파일에 write 한다.

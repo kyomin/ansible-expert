@@ -138,5 +138,6 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 			cfg.vm.provision "file", source: "nfs", destination: "nfs"
 			cfg.vm.provision "file", source: "handler", destination: "handler"
 			cfg.vm.provision "file", source: "vars", destination: "vars"
+			cfg.vm.provision "file", source: "template", destination: "template"
   end  
 end
