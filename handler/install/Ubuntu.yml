@@ -1,0 +1,6 @@
+- name: Install nginx web server
+  action : "{{ ansible_pkg_mgr }} name=nginx state=present update_cache=yes"
+- name: Upload default index.html for web server
+  get_url: url=https://www.nginx.com dest=/usr/share/nginx/html/ mode=0644 validate_certs=no
+  notify:   # get_url의 작업이 정상적으로 처리된 경우에만 실행된다.
+    - Restart nginx web server  # 핸들러의 이름과 같아야 함
