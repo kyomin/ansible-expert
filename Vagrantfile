@@ -126,6 +126,8 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 			cfg.vm.synced_folder ".", "/vagrant", disabled: true
 			cfg.vm.network "public_network", ip: "192.168.219.10"
 			cfg.vm.network "forwarded_port", guest: 22, host: 60010, auto_correct: false, id: "ssh"
+
+			# 프로비저닝 설정
 			cfg.vm.provision "shell", path: "bootstrap.sh"
 			cfg.vm.provision "file", source: "Ansible_env_ready.yml", destination: "Ansible_env_ready.yml"
 			cfg.vm.provision "shell", inline: "ansible-playbook Ansible_env_ready.yml"
@@ -139,5 +141,6 @@ Vagrant.configure(Vagrant_API_Version) do |config|
 			cfg.vm.provision "file", source: "handler", destination: "handler"
 			cfg.vm.provision "file", source: "vars", destination: "vars"
 			cfg.vm.provision "file", source: "template", destination: "template"
+			cfg.vm.provision "file", source: "roles", destination: "roles"
   end  
 end
